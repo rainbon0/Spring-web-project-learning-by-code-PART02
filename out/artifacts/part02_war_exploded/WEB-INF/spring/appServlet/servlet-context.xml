@@ -9,6 +9,9 @@
 
     <mvc:annotation-driven />
     <context:component-scan base-package="org.bong.controller" />
+    <!-- Spring의 ViewResolver
+        : Controller가 반환한 결과를 어떤 View를 통해 처리하는게 좋을지 해석
+          InternalResourceViewResolver의 경우 Controller가 반환한 결과에 앞에는 prefix 뒤에는 suffix를 삽입한 이름의 view를 찾는다.-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"></property>

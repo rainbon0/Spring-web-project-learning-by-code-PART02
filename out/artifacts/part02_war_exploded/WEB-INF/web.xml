@@ -7,11 +7,22 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/spring/root-context.xml</param-value>
     </context-param>
+
+
     <listener>
+        <!-- Spring mvc의 ContextLoaderListener가 등록되어있다. Web Application 구동 시 같이 동작
+            프로젝트 실행 시 ContextLoader 관련 로그를 출력하는 것을 확인할 수 있다.-->
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+
+    <!-- root-context.xml이 처리되면 Bean 설정들이 동작하게 된다. (객체가 생성되고 객체들 간의 의존성이 처리된다.)-->
+
+
     <servlet>
         <servlet-name>dispatcher</servlet-name>
+        <!-- DispatcherServlet class는 servlet-context.xml파일을 사용하여 내부적으로 웹 관련 처리의 준비작업을 진행한다.
+            DispatcherServlet 에서 XmlWebApplicationContext를 이용해서 servlet-context.xml울 로딩하고 해석하기 시작
+            이 과정에서 root-context.xml을 이용하여 기존에 만들어진 객체들과 servlet-context.xml에서 정의된 객체들이 연동된다.-->
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -19,4 +30,7 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+    <!-- 모든 Request가 DispatcherServlet을 통하도록 설계되는데 이러한 방식을 Front-Controller 패턴이라 한다.
+        이 패턴을 이용하는 경우 모든 Request의 처리에 대한 분배가 정해진 방식대로만 동작한다.-->
 </web-app>
